@@ -1,3 +1,4 @@
 # Diffusion-Monte-Carlo
-Diffusion Monte Carlo codes 
+
+These codes have been developed originally as part of my MSc research project looking into Diffusion Monte Carlo
 
