@@ -24,7 +24,7 @@ def G_d(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e, x_new_e,y_new_e,z_new_e, de
             delta_tau (float): The time incrament
 
         Returns:
-            Probability density (float): The probability desnity of an electron moving from the specified old coordinates
+            Probability density (float): The probability density of an electron moving from the specified old coordinates
                                          to the specified new coordinates
     """
     return np.exp(-((x_new_e - x_old_e - delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2) / (2*delta_tau)) * \
@@ -98,7 +98,7 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
             step_number (int): Final step counter
     """
 
-    # Iterating over the desired number of steps
+    # For each step, perform walking and branching of the walkers
     for step in range(num_steps):
         # Calculate the local energy for the given walker positions
         old_local_energies = local_energy(walkers[3, (walkers[0].T)[0] == 1, 0], walkers[3, (walkers[0].T)[0] == 1, 1], \
@@ -238,10 +238,13 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
         N_last_alive = N_max - np.argmax((np.fliplr(walkers[:,:,0])[0, :]) == 1) - 1
 
         # Duplicate/ kill walkers
+        # Define a counter to keep track of the alive walkers
         counter = -1
+        # Iterating over all the alive walkers, including the dead ones in between
         for i in range(N_last_alive):
             # If walker is alive
             if walkers[0, i, 0] == 1:
+                # Increase counter by 1 to correctly iterate through the weights array
                 counter += 1
                 if m_ns[counter] == 0:
                     # If duplicity is 0, kill walker
@@ -427,36 +430,6 @@ if __name__ == "__main__":
                                  num_alive_walkers = diffusion_monte_carlo(N_0, N_max, num_steps_thermalize_n, \
                                                                            num_steps_measure_n, max_duplicates)
 
-    # Scatter plot of the resulting electron distribution
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-    # Taking samples from electron 1 and electron 2
-    n_samples = 5000
-    selection = np.random.randint(low=0, high=len(measurements_x_positions_e1), size=int(0.5*n_samples))
-    x_sample_1 = np.zeros(int(0.5*n_samples))
-    y_sample_1 = np.zeros(int(0.5*n_samples))
-    z_sample_1 = np.zeros(int(0.5*n_samples))
-    for i in range(len(selection)):
-        x_sample_1[i] = measurements_x_positions_e1[selection[i]]
-        y_sample_1[i] = measurements_y_positions_e1[selection[i]]
-        z_sample_1[i] = measurements_z_positions_e1[selection[i]]
-    ax.scatter(x_sample_1, y_sample_1, z_sample_1, s=0.5)
-
-    x_sample_2 = np.zeros(int(0.5*n_samples))
-    y_sample_2 = np.zeros(int(0.5*n_samples))
-    z_sample_2 = np.zeros(int(0.5*n_samples))
-    for i in range(len(selection)):
-        x_sample_2[i] = measurements_x_positions_e2[selection[i]]
-        y_sample_2[i] = measurements_y_positions_e2[selection[i]]
-        z_sample_2[i] = measurements_z_positions_e2[selection[i]]
-    ax.scatter(x_sample_2, y_sample_2, z_sample_2, s=0.5)
-
-    ax.set_xlim([-5, 5])
-    ax.set_ylim([-5, 5])
-    ax.set_zlim([-5, 5])
-    ax.set_box_aspect([1, 1, 1])
-    plt.savefig('Dots.png', format='png')
-
     # Calculate the local energy for each measured step
     E_L_energies = []
     for i in range(len(w_E_L)):
@@ -510,6 +483,8 @@ if __name__ == "__main__":
     z_n_list = np.zeros(shape=n_bins)
     for i in range(n_bins):
         z_n_list[i] = (f_bin_edges[i]+f_bin_edges[i+1])/2
+    wavefunction_hist_values = f_hist_values / ( (z_n_list/2)**2 * np.exp(-2*(z_n_list/2)**2) )
+    wavefunction_hist_values = (wavefunction_hist_values) / np.sqrt(np.sum(wavefunction_hist_values**2 * 2/n_bins))
     plt.plot(z_n_list, f_hist_values, color='tab:blue', marker='x', ls='-', markersize = 4, label='DMC')
     plt.xlabel('Bond Length')
     plt.ylabel(r'N of walkers')
@@ -535,5 +510,8 @@ if __name__ == "__main__":
     # Plot the reference energy with step number
     plt.figure()
     plt.plot(np.arange(len(E_T_energies)),E_T_energies)
+    plt.xlabel('Time Step$')
+    plt.ylabel(r'Energy / Hartree')
+    plt.title('Offset Energy')
     plt.savefig('E_T_Energies.png', format='png')
     
