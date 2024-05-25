@@ -514,4 +514,3 @@ if __name__ == "__main__":
     plt.ylabel(r'Energy / Hartree')
     plt.title('Offset Energy')
     plt.savefig('E_T_Energies.png', format='png')
-    
