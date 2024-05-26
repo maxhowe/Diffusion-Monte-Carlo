@@ -479,33 +479,20 @@ if __name__ == "__main__":
     bond_lengths = np.array(measurements_z_positions_n2)-np.array(measurements_z_positions_n1)
     plt.figure()
     n_bins = 100
-    f_hist_values, f_bin_edges = np.histogram(bond_lengths, bins=n_bins, range=[0.5, 2.5], density=True)
+    max_bond_length = 2.5
+    min_bond_length = 0.5
+    f_hist_values, f_bin_edges = np.histogram(bond_lengths, bins=n_bins, range=[min_bond_length, max_bond_length], density=True)
     z_n_list = np.zeros(shape=n_bins)
     for i in range(n_bins):
         z_n_list[i] = (f_bin_edges[i]+f_bin_edges[i+1])/2
     wavefunction_hist_values = f_hist_values / ( (z_n_list/2)**2 * np.exp(-2*(z_n_list/2)**2) )
-    wavefunction_hist_values = (wavefunction_hist_values) / np.sqrt(np.sum(wavefunction_hist_values**2 * 2/n_bins))
+    wavefunction_hist_values = (wavefunction_hist_values) / np.sqrt(np.sum(wavefunction_hist_values**2 * (max_bond_length-min_bond_length)/n_bins))
     plt.plot(z_n_list, f_hist_values, color='tab:blue', marker='x', ls='-', markersize = 4, label='DMC')
     plt.xlabel('Bond Length')
     plt.ylabel(r'N of walkers')
     plt.legend()
     plt.title('Bond Length')
     plt.savefig('Bond_Histogram.png', format='png')
-
-    # Calculate the distance between the electrons
-    r12 = np.linspace(-0.1, 6, n_bins)
-    plt.figure()
-    measurements_r12_positions = np.sqrt((np.array(measurements_x_positions_e1)-np.array(measurements_x_positions_e2))**2 + \
-                                         (np.array(measurements_y_positions_e1)-np.array(measurements_y_positions_e2))**2 + \
-                                         (np.array(measurements_z_positions_e1)-np.array(measurements_z_positions_e2))**2 )
-    f_hist_values_r12, f_bin_edges_r12 = np.histogram(measurements_r12_positions, bins=n_bins, range=[-0.1, 6], density=True)
-    wavefunction_hist_values_r12 = f_hist_values_r12
-    wavefunction_hist_values_r12 = (wavefunction_hist_values_r12) / np.sqrt(np.sum((wavefunction_hist_values_r12) * 6.1/n_bins))
-    plt.plot(r12, wavefunction_hist_values_r12, color='tab:gray', marker='x', ls='-', markersize = 4)
-    plt.xlabel(r'Inter-electron distance, $r_{12}$')
-    plt.ylabel(r'Probability')
-    plt.title(r'Inter-electron distance')
-    plt.savefig('Interelectron_Distance.png', format='png')
 
     # Plot the reference energy with step number
     plt.figure()
