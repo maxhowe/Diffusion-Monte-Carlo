@@ -9,4 +9,4 @@ I am in the process of adding more codes to this repo.
 
 Typical final energy results of the codes are as follows (all energies given in natural units):
 
-H2  -1.1646 ± 0.0027
+H2  -1.1646 ± 0.0027  (Exact: -1.1645)
