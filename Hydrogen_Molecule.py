@@ -1,8 +1,8 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
 import scipy
 from scipy.stats import multivariate_normal
+import matplotlib.pyplot as plt
 
 
 # Defining symbols to be used
@@ -27,9 +27,9 @@ def G_d(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e, x_new_e,y_new_e,z_new_e, de
             Probability density (float): The probability density of an electron moving from the specified old coordinates
                                          to the specified new coordinates
     """
-    return np.exp(-((x_new_e - x_old_e - delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2) / (2*delta_tau)) * \
-           np.exp(-((y_new_e - y_old_e - delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2) / (2*delta_tau)) * \
-           np.exp(-((z_new_e - z_old_e - delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2) / (2*delta_tau))
+    return np.exp(-((x_new_e - x_old_e - delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2)/(2*delta_tau)) * \
+           np.exp(-((y_new_e - y_old_e - delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2)/(2*delta_tau)) * \
+           np.exp(-((z_new_e - z_old_e - delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e))**2)/(2*delta_tau))
 
 
 def G_d_nuclei(z_old_n, z_new_n, delta_tau):
@@ -47,7 +47,7 @@ def G_d_nuclei(z_old_n, z_new_n, delta_tau):
             Probability density (float): The probability density of the nucleus moving from the specified old coordinates
                                          to the specified new coordinates
     """
-    return np.exp(-(1836*(z_new_n - z_old_n - delta_tau * Nuclear_velocity_z(z_old_n)/1836)**2) / (2*delta_tau))
+    return np.exp(-(1836*(z_new_n - z_old_n - delta_tau * Nuclear_velocity_z(z_old_n)/1836)**2)/(2*delta_tau))
 
 
 def importance_sampling_weight(old_local_energies, new_local_energies, energy_offset, delta_tau):
@@ -62,7 +62,7 @@ def importance_sampling_weight(old_local_energies, new_local_energies, energy_of
         Returns:
             Weight value (float): The renormalised weight of the walker associated with the given step
     """
-    return np.exp(-delta_tau * (new_local_energies + old_local_energies - 2*energy_offset) / 2)
+    return np.exp(- delta_tau * (new_local_energies + old_local_energies - 2*energy_offset) / 2)
 
 
 def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, \
@@ -120,21 +120,21 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
         x_old_e1 = walkers[1, :, 2]
         y_old_e1 = walkers[2, :, 2]
         z_old_e1 = walkers[3, :, 2]
-        x_proposed_e1 = x_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
-        y_proposed_e1 = y_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
-        z_proposed_e1 = z_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
+        x_proposed_e1 = x_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
+        y_proposed_e1 = y_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
+        z_proposed_e1 = z_old_e1 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e1,y_old_e1,z_old_e1)
         x_old_e2 = walkers[1, :, 3]
         y_old_e2 = walkers[2, :, 3]
         z_old_e2 = walkers[3, :, 3]
-        x_proposed_e2 = x_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
-        y_proposed_e2 = y_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
-        z_proposed_e2 = z_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) + \
-                        delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
+        x_proposed_e2 = x_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_x(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
+        y_proposed_e2 = y_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_y(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
+        z_proposed_e2 = z_old_e2 + np.random.normal(scale=np.sqrt(delta_tau), size=N_max) \
+                                  + delta_tau * velocity_z(z_old_n1, z_old_n2, x_old_e2,y_old_e2,z_old_e2)
 
         # Iterating over each of the walkers
         for i in range(len(walkers[1])):
@@ -142,21 +142,21 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
             if walkers[0, i, 0] == 1:
                 # Calculate p, the probability of accepting the steps taken by the walker. Formula given by Foulkes (2001) Eqn 3.52
                 p = np.minimum(1, (G_d(z_proposed_n1[i], z_proposed_n2[i], x_proposed_e1[i],y_proposed_e1[i],z_proposed_e1[i], \
-                                       x_old_e1[i],y_old_e1[i],z_old_e1[i], delta_tau) * \
-                                       (trial_psi(z_proposed_n1[i],z_proposed_n2[i],x_proposed_e1[i],y_proposed_e1[i],z_proposed_e1[i]))**2) \
+                                    x_old_e1[i],y_old_e1[i],z_old_e1[i], delta_tau) * \
+                                    (trial_psi(z_proposed_n1[i],z_proposed_n2[i],x_proposed_e1[i],y_proposed_e1[i],z_proposed_e1[i]))**2) \
                                 / (G_d(z_old_n1[i], z_old_n2[i], x_old_e1[i],y_old_e1[i],z_old_e1[i], \
-                                       x_proposed_e1[i],y_proposed_e1[i],z_proposed_e1[i], delta_tau) * \
-                                       (trial_psi(z_old_n1[i],z_old_n2[i],x_old_e1[i],y_old_e1[i],z_old_e1[i]))**2) \
+                                     x_proposed_e1[i],y_proposed_e1[i],z_proposed_e1[i], delta_tau) * \
+                                     (trial_psi(z_old_n1[i],z_old_n2[i],x_old_e1[i],y_old_e1[i],z_old_e1[i]))**2) \
                                 * (G_d(z_proposed_n1[i], z_proposed_n2[i], x_proposed_e2[i],y_proposed_e2[i],z_proposed_e2[i], \
-                                       x_old_e2[i],y_old_e2[i],z_old_e2[i], delta_tau) * \
-                                       (trial_psi(z_proposed_n1[i],z_proposed_n2[i],x_proposed_e2[i],y_proposed_e2[i],z_proposed_e2[i]))**2) \
+                                     x_old_e2[i],y_old_e2[i],z_old_e2[i], delta_tau) * \
+                                     (trial_psi(z_proposed_n1[i],z_proposed_n2[i],x_proposed_e2[i],y_proposed_e2[i],z_proposed_e2[i]))**2) \
                                 / (G_d(z_old_n1[i], z_old_n2[i], x_old_e2[i],y_old_e2[i],z_old_e2[i], \
-                                       x_proposed_e2[i],y_proposed_e2[i],z_proposed_e2[i], delta_tau) * \
-                                       (trial_psi(z_old_n1[i],z_old_n2[i],x_old_e2[i],y_old_e2[i],z_old_e2[i]))**2) \
-                                * (G_d_nuclei(z_proposed_n1[i], z_old_n1[i], delta_tau) * (Nuclear_trial_psi(z_proposed_n1[i]))**2) \
-                                / (G_d_nuclei(z_old_n1[i], z_proposed_n1[i], delta_tau) * (Nuclear_trial_psi(z_old_n1[i]))**2) \
-                                * (G_d_nuclei(z_proposed_n2[i], z_old_n2[i], delta_tau) * (Nuclear_trial_psi(z_proposed_n2[i]))**2) \
-                                / (G_d_nuclei(z_old_n2[i], z_proposed_n2[i], delta_tau) * (Nuclear_trial_psi(z_old_n2[i]))**2) )
+                                      x_proposed_e2[i],y_proposed_e2[i],z_proposed_e2[i], delta_tau) * \
+                                      (trial_psi(z_old_n1[i],z_old_n2[i],x_old_e2[i],y_old_e2[i],z_old_e2[i]))**2) \
+                               * (G_d_nuclei(z_proposed_n1[i], z_old_n1[i], delta_tau) * (Nuclear_trial_psi(z_proposed_n1[i]))**2) \
+                               / (G_d_nuclei(z_old_n1[i], z_proposed_n1[i], delta_tau) * (Nuclear_trial_psi(z_old_n1[i]))**2) \
+                               * (G_d_nuclei(z_proposed_n2[i], z_old_n2[i], delta_tau) * (Nuclear_trial_psi(z_proposed_n2[i]))**2) \
+                               / (G_d_nuclei(z_old_n2[i], z_proposed_n2[i], delta_tau) * (Nuclear_trial_psi(z_old_n2[i]))**2) )
                 # Metropolis acceptance criterion
                 if p == 1:
                     walkers[3, i, 0] = z_proposed_n1[i]
@@ -362,7 +362,7 @@ def diffusion_monte_carlo(N_0, N_max, num_steps_thermalize_n, num_steps_measure_
     all_x_positions_e1 = []
     all_y_positions_e1 = []
     all_z_positions_e1 = []
-    all_x_positions_e2 = [] 
+    all_x_positions_e2 = []
     all_y_positions_e2 = []
     all_z_positions_e2 = []
     step_number = 0             # Step number counter
