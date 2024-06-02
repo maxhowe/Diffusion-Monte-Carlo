@@ -41,10 +41,9 @@ def importance_sampling_weight(old_local_energies, new_local_energies, energy_of
     """
     return np.exp(- delta_tau * (new_local_energies + old_local_energies - 2*energy_offset) / 2)
 
-
 def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, all_positions, \
                           num_alive_walkers, max_duplicates, name, step_number):
-     """
+    """
     Performs the walking and branching steps of the Diffusion Monte Carlo process.
 
         Parameters:
@@ -68,7 +67,7 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
             num_alive_walkers (float): An array containing the number of alive walkers after each step
             step_number (int): Final step counter
     """
-
+    
     # For each step, perform walking and branching of the walkers
     for step in range(num_steps):
         # Calculate the local energy for the given walker positions
