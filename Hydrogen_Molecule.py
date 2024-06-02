@@ -450,7 +450,7 @@ if __name__ == "__main__":
     mean_std_energy = std_energy
     print("Final Mean Energy from all Measurements:", final_mean_energy)
     print("Standard Deviation of Energy Mean from Measured Steps:", mean_std_energy)
-    print("Eqm energy with ZPE!!: -1.1645")
+    print("Exact Energy: -1.1645")
 
     # Plot the energy variation with step number
     plt.figure()
