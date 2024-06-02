@@ -275,7 +275,7 @@ if __name__ == "__main__":
     plt.fill_between(np.arange(n_wait,len(E_L_energies)), lower_limit, upper_limit, color='tab:olive', alpha=0.5)
     plt.xlabel('Measured Time Step')
     plt.ylabel(r'Energy / $\hbar \omega$')
-    plt.title(r'Variation of E$_L$ with Step Number')
+    plt.title(r'Variation of Energy with Step Number')
     plt.axhline(y=0.5, color='tab:red', linestyle='dashed', label='Exact Energy')
     plt.legend()
     plt.savefig('Energy.png')
