@@ -15,7 +15,7 @@ def G_d(z_old_n1, z_old_n2, x_old_e,y_old_e,z_old_e, x_new_e,y_new_e,z_new_e, de
     Importance sampling diffusive displacement probability density distribution for electrons. 
     The prefactor has been removed as we only require its relative value.
     This corresponds to Eqn 3.49 in Foulkes (2001).
-    The value corresponds to the product of the probability densities for the independent a, y and z displacements.
+    The value corresponds to the product of the probability densities for the independent x, y and z displacements.
 
         Parameters:
             z_old_n1[/2] (float): The original z position of nucleus 1[/2]
