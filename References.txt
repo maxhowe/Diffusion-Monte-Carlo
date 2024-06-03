@@ -2,3 +2,6 @@ References:
 
 Foulkes 2001:  W. M. C. Foulkes et al. “Quantum Monte Carlo simulations of solids”. In: Rev. Mod. Phys. 
                73 (2001), pp. 33–83. doi: 10.1103/RevModPhys.73.33.
+
+Pachucki 2010: Pachucki, K., 2010. Born-Oppenheimer potential for H 2. Physical Review A, 82(3), p.032509. 
+               doi: 10.1103/PhysRevA.82.032509
