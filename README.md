@@ -11,4 +11,6 @@ Typical final energy results of the codes are as follows (all energies given in 
 
 1D HO:  0.4999 ± 0.0010    (Exact: 0.5) 
 
+3D HO:  1.4999 ± 0.0013    (Exact: 1.5) 
+
 H2:     -1.1649 ± 0.0027   (Exact: -1.1645)
