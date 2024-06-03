@@ -189,7 +189,7 @@ def walking_and_branching(walkers, E_T_energies, w_E_L, sum_weights, num_steps, 
 
 def diffusion_monte_carlo(N_0, N_max, num_steps_thermalize, num_steps_measure, max_duplicates, delta_tau):
     """
-    Perform Diffusion Monte Carlo for the Hydrogen atom. Sets up the initial system with guessed starting positions for the walkers,
+    Perform Diffusion Monte Carlo for the 3D Harmonic Oscillator. Sets up the initial system with guessed starting positions for the walkers,
     runs the thermalising then measuring, walking and branching steps.
 
         Parameters:
