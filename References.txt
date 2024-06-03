@@ -5,3 +5,6 @@ Foulkes 2001:  W. M. C. Foulkes et al. “Quantum Monte Carlo simulations of sol
 
 Pachucki 2010: Pachucki, K., 2010. Born-Oppenheimer potential for H 2. Physical Review A, 82(3), p.032509. 
                doi: 10.1103/PhysRevA.82.032509
+
+Wind 1965:     Wind, H., 1965. Electron energy for H2+ in the ground state. The journal of chemical physics, 42(7), pp.2371-2373.
+               doi: https://doi.org/10.1063/1.1696302
