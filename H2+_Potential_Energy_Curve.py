@@ -32,13 +32,13 @@ Data = np.array([[0.9,  -0.386, 0.004], \
                  [100,  -0.5, 0.00001]])
 
 # Literature data from Wind 1965
-df = pd.read_excel('H2+_exact.xlsx')
-exact_x = df.values[:,0]
-exact_E = df.values[:,3]
+#df = pd.read_excel('H2+_exact.xlsx')
+#exact_x = df.values[:,0]
+#exact_E = df.values[:,3]
 
 # Plotting the results
 plt.errorbar(Data[:-1,0 ], Data[:-1,1], yerr=Data[:-1,2], capsize=4, fmt='x--', label='Data', color='tab:blue')
-plt.plot(exact_x, exact_E, label='Literature', color='tab:red')
+#plt.plot(exact_x, exact_E, label='Literature', color='tab:red')
 plt.xlabel(r'Bond Length / $a_0$')
 plt.ylabel(r'Energy / $E_H$')
 plt.title(r'Energy of $H_2^+$ with Bond Length')
